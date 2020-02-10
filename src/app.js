@@ -23,7 +23,8 @@ app.use(express.urlencoded( { extended: true } ));
 
 
 // Routes
-
+app.use('/api/Empresas', require('./routes/empresas'));
+app.use('/api/Prospectos', require('./routes/prospectos'));
 
 // Static Fields
 app.use(express.static(path.join(__dirname, 'public')));
