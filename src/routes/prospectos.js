@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM Prospectos`).catch(e => {
+    const db = await pool.query(`SELECT * FROM prospectosView`).catch(e => {
         manejoErrores('Error al buscar los Prospectos', res);
     });
 
