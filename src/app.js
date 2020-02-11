@@ -17,7 +17,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-app.use(express.urlencoded( { extended: true } ));
+app.use(express.urlencoded({ extended: true }));
 
 // GLobal Services
 
@@ -25,6 +25,9 @@ app.use(express.urlencoded( { extended: true } ));
 // Routes
 app.use('/api/Empresas', require('./routes/empresas'));
 app.use('/api/Prospectos', require('./routes/prospectos'));
+app.use('/api/Normas', require('./routes/normas'));
+app.use('/api/TipoServicio', require('./routes/tipo-servicios'));
+app.use('/api/Costos', require('./routes/costos'));
 
 // Static Fields
 app.use(express.static(path.join(__dirname, 'public')));
@@ -33,4 +36,3 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.listen(app.get('port'), () => {
     console.log('Server on port: ', app.get('port'));
 });
-
