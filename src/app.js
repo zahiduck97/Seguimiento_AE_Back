@@ -28,6 +28,7 @@ app.use('/api/Prospectos', require('./routes/prospectos'));
 app.use('/api/Normas', require('./routes/normas'));
 app.use('/api/TipoServicio', require('./routes/tipo-servicios'));
 app.use('/api/Costos', require('./routes/costos'));
+app.use('/api/Servicios', require('./routes/servicios'));
 
 // Static Fields
 app.use(express.static(path.join(__dirname, 'public')));
