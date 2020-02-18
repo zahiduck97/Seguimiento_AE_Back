@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../database');
+var bcrypt = require('bcryptjs');
 
 // Add usuario
 router.post('/', async(req, res) => {
@@ -9,18 +10,28 @@ router.post('/', async(req, res) => {
         return
     }
 
-    const db = await pool.query(` INSERT INTO Usuarios(nombre, password, username, rol) VALUES ('${req.body.nombre}', '${req.body.password}', '${req.body.username}', '${req.body.rol}') `).catch(e => {
-        manejoErrores('Error al insertar', res);
-        console.log(e);
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, async function (err, hash) {
+            if(err)
+                manejoErrores('Error al encriptar', res);
+            else {
+                const db = await pool.query(` INSERT INTO Usuarios(nombre, password, username, rol) VALUES ('${req.body.nombre}', '${hash}', '${req.body.username}', '${req.body.rol}') `).catch(e => {
+                    manejoErrores('Error al insertar', res);
+                    console.log(e);
+                });
+
+                if (db)
+                    res.json('ok');
+            }
+        });
     });
 
-    if (db)
-        res.json('ok');
+
 });
 
 // Get all usuario
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM Usuarios`).catch(e => {
+    const db = await pool.query(`SELECT id, nombre, username, rol FROM Usuarios`).catch(e => {
         manejoErrores('Error al buscar', res);
     });
 

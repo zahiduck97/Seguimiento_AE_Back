@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 
 // Initializations
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 // Settings
 const puerto = process.env.PORT || 3000;
@@ -30,11 +32,19 @@ app.use('/api/TipoServicio', require('./routes/tipo-servicios'));
 app.use('/api/Costos', require('./routes/costos'));
 app.use('/api/Servicios', require('./routes/servicios'));
 app.use('/api/Usuarios', require('./routes/usuarios'));
+app.use('/api/Login', require('./routes/login'));
+
+io.on('connection', function (socket) {
+    socket.emit('msg', { hello: 'world' });
+    socket.on('ferret', function (data) {
+        console.log(data);
+    });
+});
 
 // Static Fields
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Server
-app.listen(app.get('port'), () => {
+http.listen(app.get('port'), () => {
     console.log('Server on port: ', app.get('port'));
 });
