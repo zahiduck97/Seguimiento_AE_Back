@@ -33,11 +33,13 @@ app.use('/api/Costos', require('./routes/costos'));
 app.use('/api/Servicios', require('./routes/servicios'));
 app.use('/api/Usuarios', require('./routes/usuarios'));
 app.use('/api/Login', require('./routes/login'));
+app.use('/api/Movimientos', require('./routes/movimientos'));
 
+// Socket 
 io.on('connection', function (socket) {
-    socket.emit('msg', { hello: 'world' });
-    socket.on('ferret', function (data) {
-        console.log(data);
+    socket.emit('navbarStatus', { status: false, rol: 0 });
+    socket.on('navbarStatus', function (data) {
+        socket.emit('navbarStatus', { status: data.status, rol: data.rol });
     });
 });
 

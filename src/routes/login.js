@@ -25,8 +25,10 @@ router.put('/checkUser', async(req, res) => {
             console.log(req.body.password, db[0].password, comparacion)
             if(err)
                 manejoErrores("Error al comparar", res);
-            if(comparacion == true)
+            if(comparacion == true){
+                console.log({id : db[0].id, rol : db[0].rol})
                 res.json({id : db[0].id, rol : db[0].rol});
+            }
             else
                 manejoErrores("La contraseña no es correcta", res);
         });

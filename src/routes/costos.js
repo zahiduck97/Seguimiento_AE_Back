@@ -14,8 +14,15 @@ router.post('/', async(req, res) => {
         console.log(e);
     });
 
-    if (db)
-        res.json('ok');
+    const select = await pool.query(`SELECT * FROM costosView WHERE id = ${db.insertId}`).catch(e => {
+        manejoErrores('Error al buscar', res);
+        console.log(e);
+    })
+
+    console.log(select[0])
+
+    if (select)
+        res.json(select[0]);
 });
 
 // Get all empresas

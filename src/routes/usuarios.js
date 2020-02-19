@@ -31,7 +31,7 @@ router.post('/', async(req, res) => {
 
 // Get all usuario
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT id, nombre, username, rol FROM Usuarios`).catch(e => {
+    const db = await pool.query(`SELECT id, nombre, username, rol FROM Usuarios WHERE rol != 3`).catch(e => {
         manejoErrores('Error al buscar', res);
     });
 
