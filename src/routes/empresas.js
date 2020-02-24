@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const empresadb = await pool.query(`SELECT * FROM Empresas`).catch(e => {
+    const empresadb = await pool.query(`SELECT * FROM Empresas WHERE activo = 1`).catch(e => {
         manejoErrores('Error al buscar las empresas', res);
     });
 
@@ -44,10 +44,10 @@ router.get('/:id', async(req, res) => {
 })
 
 // Delete 1 empresa
-router.delete('/:id', async(req, res) => {
+router.put('/activo/:id', async(req, res) => {
     const id = req.params.id;
 
-    const db = await pool.query(`DELETE FROM Empresas WHERE id = ${id}`).catch(e => {
+    const db = await pool.query(`UPDATE Empresas SET activo = 0 WHERE id = ${id}`).catch(e => {
         manejoErrores('Error al borrar la empresa', res);
         console.log(e);
     })
