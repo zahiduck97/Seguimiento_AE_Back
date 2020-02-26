@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const empresadb = await pool.query(`SELECT * FROM Empresas WHERE activo = 1`).catch(e => {
+    const empresadb = await pool.query(`SELECT * FROM Empresas WHERE activo = 1  ORDER BY id DESC`).catch(e => {
         manejoErrores('Error al buscar las empresas', res);
     });
 

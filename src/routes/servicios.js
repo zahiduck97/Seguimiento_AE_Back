@@ -14,13 +14,20 @@ router.post('/', async(req, res) => {
         console.log(e);
     });
 
-    if (db)
-        res.json('ok');
+    const select = await pool.query(`SELECT * FROM serviciosView WHERE id = ${db.insertId}`).catch(e => {
+        manejoErrores('Error al buscar', res);
+        console.log(e);
+    })
+
+    console.log(select[0])
+
+    if (select)
+        res.json(select[0]);
 });
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM serviciosView`).catch(e => {
+    const db = await pool.query(`SELECT * FROM serviciosView ORDER BY id DESC`).catch(e => {
         manejoErrores('Error al buscar las normas', res);
     });
 
