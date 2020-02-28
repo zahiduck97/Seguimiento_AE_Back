@@ -64,19 +64,40 @@ router.put('/:id', async(req, res) => {
     const id = req.params.id;
 
 
-    var contrato = 0;
+    var contratos = 0;
     var acta = 0;
     var rfc = 0;
     var carta = 0;
 
 
-    contrato = (req.body.contrato == true) ? 1 : 0;
+    contratos = (req.body.contratos == true) ? 1 : 0;
     acta = (req.body.acta == true) ? 1 : 0;
     rfc = (req.body.rfc == true) ? 1 : 0;
     carta = (req.body.carta == true) ? 1 : 0;
 
 
-    const db = await pool.query(`UPDATE Prospectos SET contratos = '${contrato}', acta = '${acta}', rfc = '${rfc}', carta = '${carta}' WHERE id = ${id}`).catch(e => {
+    const db = await pool.query(`UPDATE Prospectos SET contratos = '${contratos}', acta = '${acta}', rfc = '${rfc}', carta = '${carta}' WHERE id = ${id}`).catch(e => {
+        manejoErrores('Error al actualizar', res);
+        console.log(e);
+    })
+
+    if (db.affectedRows > 0)
+        res.json('ok')
+    else
+        manejoErrores('No existe el id', res);
+})
+
+// Editar el prospect
+router.put('/editar/:id', async(req, res) => {
+    console.log(req.body);
+    const id = req.params.id;
+
+    if(!req.body.idEmpresa || !req.body.nombre || !req.body.telefono || !req.body.correo || !req.body.direccion){
+        manejoErrores("Faltan datos", res);
+        return
+    }
+
+    const db = await pool.query(`UPDATE Prospectos SET idEmpresa = '${req.body.idEmpresa}', nombre = '${req.body.nombre}', telefono = '${req.body.telefono}', correo = '${req.body.correo}', direccion = '${req.body.direccion}' WHERE id = ${id}`).catch(e => {
         manejoErrores('Error al actualizar', res);
         console.log(e);
     })

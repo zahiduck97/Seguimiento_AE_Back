@@ -28,6 +28,28 @@ router.get('/', async(req, res) => {
         res.json(db);
 })
 
+// Update
+router.put('/:id', async(req, res) => {
+    const id = req.params.id;
+
+    if(!req.body.codificacion){
+        manejoErrores('Faltan Datos', res);
+        return 
+    }
+
+    const db = await pool.query(`UPDATE Normas SET codificacion = '${req.body.codificacion}' WHERE id = ${id}`).catch(e => {
+        manejoErrores('Error al actualizar', res);
+        console.log(e);
+    })
+
+    console.log(db);
+
+    if(db.affectedRows > 0)
+        res.json('ok')
+    else
+        manejoErrores('No existe el id', res);
+});
+
 // Functions
 function manejoErrores(mensaje, res) {
     res.status(400).json({
