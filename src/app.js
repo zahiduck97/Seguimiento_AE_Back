@@ -34,6 +34,7 @@ app.use('/api/Servicios', require('./routes/servicios'));
 app.use('/api/Usuarios', require('./routes/usuarios'));
 app.use('/api/Login', require('./routes/login'));
 app.use('/api/Movimientos', require('./routes/movimientos'));
+app.use('/api/Cotizaciones', require('./routes/cotizaciones'));
 
 // Socket 
 io.on('connection', function (socket) {
