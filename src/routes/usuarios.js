@@ -91,6 +91,35 @@ router.put('/:id', async(req, res) => {
         manejoErrores('No existe el id', res);
 });
 
+// Update password
+router.put('/password/:id', async(req, res) => {
+    const id = req.params.id;
+
+    if(!req.body.password){
+        manejoErrores('Faltan Datos', res);
+        return 
+    }
+
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, async function (err, hash) {
+            if(err)
+                manejoErrores('Error al encriptar', res);
+            else {
+                const db = await pool.query(` UPDATE Usuarios SET password = '${hash}' WHERE id = ${id} `).catch(e => {
+                    manejoErrores('Error al actualizar', res);
+                    console.log(e);
+                });
+
+                
+                if(db.affectedRows > 0)
+                    res.json('ok')  
+                else
+                    manejoErrores('No existe el id', res);
+            }
+        });
+    });
+});
+
 
 // Functions
 function manejoErrores(mensaje, res) {
