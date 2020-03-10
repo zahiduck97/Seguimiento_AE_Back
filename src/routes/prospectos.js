@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM prospectosView ORDER BY id DESC`).catch(e => {
+    const db = await pool.query(`SELECT * FROM prospectosView WHERE activoEmpresa = 1 AND activoProspecto = 1 ORDER BY id DESC`).catch(e => {
         manejoErrores('Error al buscar los Prospectos', res);
     });
 
@@ -44,18 +44,18 @@ router.get('/:id', async(req, res) => {
 })
 
 // Delete 1 empresa
-router.delete('/:id', async(req, res) => {
+router.put('/activo/:id', async(req, res) => {
     const id = req.params.id;
 
-    const db = await pool.query(`DELETE FROM Prospectos WHERE id = ${id}`).catch(e => {
-        manejoErrores('Error al borrar el prospecto', res);
+    const db = await pool.query(`UPDATE Prospectos SET activo = 0 WHERE id = ${id}`).catch(e => {
+        manejoErrores('Error al borrar', res);
         console.log(e);
     })
 
-    if (db.affectedRows > 0)
+    if(db.affectedRows > 0)
         res.json('ok');
     else
-        manejoErrores('No existe el prospecto a borrar', res);
+        manejoErrores('No existe el id a borrar', res);
 });
 
 // Update
