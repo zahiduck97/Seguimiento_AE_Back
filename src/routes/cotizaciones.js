@@ -4,12 +4,12 @@ const pool = require('../database');
 
 // Add Cotizacion
 router.post('/', async(req, res) => {
-    if (!req.body.idProspecto || !req.body.idCosto || !req.body.idNorma || !req.body.idTipoServicio) {
+    if (!req.body.idProspecto || !req.body.idCosto || !req.body.comentario || !req.body.total) {
         manejoErrores('Faltan datos', res);
         return
     }
 
-    const db = await pool.query(` INSERT INTO Cotizaciones(idProspecto, idCosto) VALUES ('${req.body.idProspecto}', '${req.body.idCosto}') `).catch(e => {
+    const db = await pool.query(` INSERT INTO Cotizaciones(idProspecto, idCosto, comentario, total) VALUES ('${req.body.idProspecto}', '${req.body.idCosto}', '${req.body.comentario}', '${req.body.total}') `).catch(e => {
         manejoErrores('Error al insertar', res);
         console.log(e);
     });
