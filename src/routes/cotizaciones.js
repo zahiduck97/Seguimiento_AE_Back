@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM cotizacionesView ORDER BY id DESC`).catch(e => {
+    const db = await pool.query(`SELECT * FROM cotizacionesView ORDER BY fecha DESC`).catch(e => {
         manejoErrores('Error al buscar los servicios', res);
     });
 
