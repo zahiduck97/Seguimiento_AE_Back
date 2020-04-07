@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM cotizacionesView ORDER BY fecha DESC`).catch(e => {
+    const db = await pool.query(`SELECT * FROM cotizacionesView WHERE activo = 1 ORDER BY fecha DESC`).catch(e => {
         manejoErrores('Error al buscar los servicios', res);
     });
 
@@ -48,6 +48,22 @@ router.put('/:id', async(req, res) => {
         res.json('ok')
     else
         manejoErrores('No existe el id', res);
+});
+
+// Delete
+router.put('/activo/:id/:estado', async(req, res) => {
+    const id = req.params.id;
+    const estado = req.params.estado;
+
+    const db = await pool.query(`UPDATE Cotizaciones SET activo = ${estado} WHERE id = ${id}`).catch(e => {
+        manejoErrores('Error al borrar', res);
+        console.log(e);
+    })
+
+    if(db.affectedRows > 0)
+        res.json('ok');
+    else
+        manejoErrores('No existe el id a borrar', res);
 });
 
 // Functions
