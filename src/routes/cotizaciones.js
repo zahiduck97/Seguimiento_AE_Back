@@ -9,7 +9,7 @@ router.post('/', async(req, res) => {
         return
     }
 
-    const db = await pool.query(` INSERT INTO Cotizaciones(idProspecto, idCosto, comentario, total) VALUES ('${req.body.idProspecto}', '${req.body.idCosto}', '${req.body.comentario}', '${req.body.total}') `).catch(e => {
+    const db = await pool.query(` INSERT INTO Cotizaciones(idProspecto, idCosto, comentario, total) VALUES ('${req.body.idProspecto}', '${req.body.idCosto[0]}', '${req.body.comentario}', '${req.body.total}') `).catch(e => {
         manejoErrores('Error al insertar', res);
         console.log(e);
     });
@@ -30,14 +30,16 @@ router.get('/', async(req, res) => {
 
 // Update
 router.put('/:id', async(req, res) => {
+    console.log(req.body, req.params.id)
     const id = req.params.id;
 
-    if(!req.body.nombre){
-        manejoErrores('Faltan Datos', res);
-        return 
+    if (!req.body.idProspecto || !req.body.idCosto || !req.body.comentario || !req.body.total) {
+        manejoErrores('Faltan datos', res);
+        return
     }
 
-    const db = await pool.query(`UPDATE TipoServicio SET nombre = '${req.body.nombre}' WHERE id = ${id}`).catch(e => {
+    const db = await pool.query(`UPDATE Cotizaciones SET idProspecto = '${req.body.idProspecto}', idCosto = '${req.body.idCosto}', comentario = '${req.body.comentario}',
+     total = '${req.body.total}' WHERE id = ${id}`).catch(e => {
         manejoErrores('Error al actualizar', res);
         console.log(e);
     })
