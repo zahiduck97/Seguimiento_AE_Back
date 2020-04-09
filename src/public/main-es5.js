@@ -1992,7 +1992,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./src/app/components/cotizacion/modals/edit-cotizacion/edit-cotizacion.component.ts");
 
     var config = {
-      url: 'http://localhost:3000',
+      url: '',
       options: {}
     };
 
@@ -5356,10 +5356,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var LoginComponent =
     /*#__PURE__*/
     function () {
-      function LoginComponent(loginServices, router, loginService) {
+      function LoginComponent(router, loginService) {
         _classCallCheck(this, LoginComponent);
 
-        this.loginServices = loginServices;
         this.router = router;
         this.loginService = loginService;
         this.usuario = {
@@ -5386,7 +5385,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     this.preloaderActivo = true;
                     this.desactivado = true;
                     _context20.next = 5;
-                    return this.loginServices.validarUsuario(this.usuario).toPromise().then(function (res) {
+                    return this.loginService.validarUsuario(this.usuario).toPromise().then(function (res) {
                       sessionStorage.setItem('id', res.id.toString());
                       sessionStorage.setItem('rol', res.rol.toString());
 
@@ -5426,8 +5425,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     LoginComponent.ctorParameters = function () {
       return [{
-        type: src_app_services_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]
-      }, {
         type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]
       }, {
         type: src_app_services_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"]

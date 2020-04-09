@@ -970,7 +970,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const config = { url: 'http://localhost:3000', options: {} };
+const config = { url: '', options: {} };
 let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -3052,8 +3052,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let LoginComponent = class LoginComponent {
-    constructor(loginServices, router, loginService) {
-        this.loginServices = loginServices;
+    constructor(router, loginService) {
         this.router = router;
         this.loginService = loginService;
         this.usuario = {
@@ -3068,7 +3067,7 @@ let LoginComponent = class LoginComponent {
             console.log(this.usuario);
             this.preloaderActivo = true;
             this.desactivado = true;
-            yield this.loginServices.validarUsuario(this.usuario).toPromise()
+            yield this.loginService.validarUsuario(this.usuario).toPromise()
                 .then(res => {
                 sessionStorage.setItem('id', res.id.toString());
                 sessionStorage.setItem('rol', res.rol.toString());
@@ -3094,7 +3093,6 @@ let LoginComponent = class LoginComponent {
     }
 };
 LoginComponent.ctorParameters = () => [
-    { type: src_app_services_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
     { type: src_app_services_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"] }
 ];
