@@ -81,7 +81,7 @@ router.put('/enviado/:id/:estado', async(req, res) => {
     if(db.affectedRows > 0)
         res.json('ok');
     else
-        manejoErrores('No existe el id a borrar', res);
+        manejoErrores('No existe el id a borrar ', res);
 });
 
 // Functions
