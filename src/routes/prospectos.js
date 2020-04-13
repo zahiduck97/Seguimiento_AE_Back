@@ -20,7 +20,7 @@ router.post('/', async(req, res) => {
 
 // Get all empresas
 router.get('/', async(req, res) => {
-    const db = await pool.query(`SELECT * FROM prospectosView WHERE activoEmpresa = 1 AND activoProspecto = 1 ORDER BY id DESC`).catch(e => {
+    const db = await pool.query(`SELECT * FROM Prospectos WHERE activo = 1 ORDER BY id DESC`).catch(e => {
         manejoErrores('Error al buscar los Prospectos', res);
     });
 
