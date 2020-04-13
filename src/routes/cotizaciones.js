@@ -68,6 +68,22 @@ router.put('/activo/:id/:estado', async(req, res) => {
         manejoErrores('No existe el id a borrar', res);
 });
 
+// Enviado
+router.put('/enviado/:id/:estado', async(req, res) => {
+    const id = req.params.id;
+    const estado = req.params.estado;
+
+    const db = await pool.query(`UPDATE Cotizaciones SET enviado = ${estado} WHERE id = ${id}`).catch(e => {
+        manejoErrores('Error al actualizar', res);
+        console.log(e);
+    })
+
+    if(db.affectedRows > 0)
+        res.json('ok');
+    else
+        manejoErrores('No existe el id a borrar', res);
+});
+
 // Functions
 function manejoErrores(mensaje, res) {
     res.status(400).json({
